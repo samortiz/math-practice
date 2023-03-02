@@ -1,0 +1,192 @@
+/*
+  These styles are applied in App.js and will be available everywhere in the site
+  Be careful with your specificity so the styles don't accidentally get applied.
+ */
+@import "global_variables";
+
+body {
+  margin: 0;
+  font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* reboot sets a fat bottom margin, but it looks bad with HTML generated with TinyMCE */
+p {
+  margin-bottom: 0;
+}
+
+.root-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+.root-left {
+  min-height: 100vh;
+  max-width: $math-left-menu-width;
+  min-width: $math-left-menu-width;
+  width: $math-left-menu-width;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+}
+
+.root-right {
+  min-height: 100%;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.math-container-narrow {
+  max-width: 600px;
+  padding: 30px;
+}
+
+.math-container-medium {
+  max-width: 900px;
+  padding: 30px;
+}
+
+.math-container-wide {
+  padding: 30px;
+}
+
+/* This removes the bootstrap strangeness of negative margins */
+.math-container-wide > .row {
+  margin-top: 0;
+  margin-left: 0;
+}
+
+/* ------------------------ Bootstrap overrides (see global_variables.scss for defaults) ------------------------------------- */
+
+.btn-primary {
+  color: var(--math-primary-text);
+  background-color: var(--math-primary-background);
+  border-color: var(--math-primary-background);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+  color: var(--math-primary-hover-text);
+  background-color: var(--math-primary-hover-background);
+  border-color: var(--math-primary-hover-background);
+}
+
+.btn-secondary {
+  color: var(--math-secondary-text);
+  background-color: var(--math-secondary-background);
+  border-color: var(--math-secondary-background);
+}
+
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-secondary.active, .open > .dropdown-toggle.btn-secondary {
+  color: var(--math-secondary-hover-text);
+  background-color: var(--math-secondary-hover-background);
+  border-color: var(--math-secondary-hover-background);
+}
+
+/* fix bootstrap button links (buttons that look like links) */
+button.btn-link:hover {
+  background-color: white;
+}
+
+// An extra class to override the .btn-primary above
+button.btn-link.btn-primary {
+  color: var(--math-link-color);
+  background-color: white;
+  border-color: white;
+}
+
+/* ----------------------------------------- Misc ------------------------------------- */
+
+button.nav-link {
+  color: var(--math-link-color);
+  background-color: white;
+  border-color: white;
+}
+
+.math-error-message {
+  color: red;
+}
+
+.math-label {
+  font-weight: bold;
+}
+
+.math-button-row {
+  text-align: center;
+}
+
+.math-button-row button {
+  margin: 10px;
+}
+
+.math-fake-input {
+  padding: 15px;
+}
+
+/* convert a bootstrap button into a text field */
+.math-button-as-input {
+  padding: 1rem 0.75rem;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  width: 100%;
+  text-align: left;
+}
+
+.math-button-as-input:hover, .math-button-as-input:focus, .math-button-as-input:active, .math-button-as-input:active:hover {
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+}
+
+
+.math-icon-button, .math-icon-button:hover, .math-icon-button:focus, .math-icon-button:active, .math-icon-button:active:hover {
+  color: black;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: none;
+}
+
+
+/* --------------- Mobile ------------------------ */
+@media screen and (max-width: $math-mobile) {
+  .root-container {
+    flex-direction: column;
+  }
+
+  .root-left {
+    min-height: auto;
+    max-width: 100%;
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .mobile-only {
+    display: inherit;
+  }
+
+  .math-container-narrow {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .math-container-medium {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .math-container-wide {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+}

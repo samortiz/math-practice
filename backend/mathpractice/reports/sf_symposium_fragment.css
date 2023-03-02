@@ -1,0 +1,55 @@
+.sf-container {
+  padding: 20px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+}
+
+.sf-conf {
+  width: 100%;
+  text-align: right;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.sf-location {
+  width: 100%;
+  text-align: right;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.sf-symposium-title {
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.sf-authors {
+  width: 100%;
+  text-align: center;
+  font-style: italic;
+}
+
+.sf-affiliations {
+  width: 100%;
+  text-align: center;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.sf-symposium-header {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+/* Remove default styling by browser and reboot */
+.sf-symposium-text p, .sf-symposium-text ol, .sf-symposium-text ul, .sf-symposium-text dl {
+  margin-top: 0;
+  margin-bottom: 0;
+}

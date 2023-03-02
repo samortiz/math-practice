@@ -1,0 +1,27 @@
+/*
+  Globally defined CSS variables
+*/
+
+:root {
+  --math-dark-color: #255;
+  --math-medium-dark-color: #366;
+  --math-light-color: #DFF;
+  --math-highlight-color: #FFFFFF;
+  --math-logo-url: '';
+  --math-link-color: #1188AA;
+
+  // Bootstrap color overrides
+  --math-primary-text: #FFFFFF;
+  --math-primary-background: #2277BB;
+  --math-primary-hover-text: #FFFFFF;
+  --math-primary-hover-background: #1166AA;
+  --math-secondary-text: #FFFFFF;
+  --math-secondary-background: #777777;
+  --math-secondary-hover-text: #FFFFFF;
+  --math-secondary-hover-background: #666666;
+}
+
+$math-mobile: 1000px;
+$math-left-menu-width: 280px;
+
+

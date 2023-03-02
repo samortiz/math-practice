@@ -1,0 +1,93 @@
+version: '3.3'
+
+# This will load values from the .env file using $SOME_VAR syntax
+
+services:
+  nginx:
+    restart: $RESTART_SERVICES
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static_volume:/app/backend/usacm/static
+      - $NGINX_CONF_DIR:/etc/nginx/conf.d
+      - ./docker/nginx/shared:/etc/nginx/shared
+      - ./docker/nginx/certbot/conf:/etc/letsencrypt
+      - ./docker/nginx/certbot/www:/var/www/certbot
+    logging:
+      driver: $LOGGING_DRIVER
+    depends_on:
+      - backend
+    # Reload nginx in case the certificate renewed
+    command: "/bin/sh -c 'while :; do sleep 7d & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  certbot:
+    image: certbot/certbot
+    restart: $RESTART_SERVICES
+    logging:
+      driver: $LOGGING_DRIVER
+    volumes:
+      - ./docker/nginx/certbot/conf:/etc/letsencrypt
+      - ./docker/nginx/certbot/www:/var/www/certbot
+    # Check for certificate renewal LetsEncrypt issues 90 day certificates and they renew 30 days before expiry
+    # See .env file CERTBOT_ENTRYPOINT=/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 21d & wait $${!}; done;'
+    entrypoint: $CERTBOT_ENTRYPOINT
+
+  postgres:
+    restart: $RESTART_SERVICES
+    image: postgres:14
+    logging:
+      driver: $LOGGING_DRIVER
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+    ports:
+      - "5432:5432"
+
+  backend:
+    restart: $RESTART_SERVICES
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    entrypoint: [ "bash", "/app/docker/backend/wsgi-entrypoint.sh" ]
+    volumes:
+      - .:/app
+      - static_volume:/app/backend/usacm/static
+    expose:
+      - 8000
+    logging:
+      driver: $LOGGING_DRIVER
+    depends_on:
+      - postgres
+
+  # This will run scheduled jobs - see docker/backend/crontab
+  cron:
+    restart: $RESTART_SERVICES
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    entrypoint: [ "cron", "-f" ]
+    logging:
+      driver: $LOGGING_DRIVER
+
+  backup:
+    restart: $RESTART_SERVICES
+    build: 'docker/backup'
+    depends_on:
+      - postgres
+    environment:
+      - PGPASSWORD=$DB_PASSWORD
+      - ENVIRONMENT=$ENVIRONMENT
+      - BACKUP_BUCKET=$BACKUP_BUCKET
+    logging:
+      driver: $LOGGING_DRIVER
+
+volumes:
+  static_volume: { }
+  pgdata: { }

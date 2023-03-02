@@ -1,0 +1,78 @@
+@import "../global_variables";
+
+.header-logo {
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  background-image: var(--math-header-url);
+  background-size: 100%;
+  height: 150px;
+  text-align:left;
+  padding-top:40px;
+
+}
+
+.header-logo h2 {
+  background: var(--math-dark-color);
+  color: var(--math-highlight-color);
+  border-radius:5px;
+  box-shadow: 3px 3px 7px var(--math-dark-color);
+  padding:15px 25px;
+  display:inline-block;
+  margin-left:40px;
+  white-space: nowrap;
+}
+
+.user-menu {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+.user-menu .dropdown-item {
+  padding: 10px;
+  color: var(--math-light-color);
+  white-space: nowrap;
+}
+
+.user-menu .dropdown-item svg {
+  padding-right: 10px;
+}
+
+// Apply conf theme to the bootstrap dropdowns
+.user-menu .dropdown-toggle.btn {
+  background-color: var(--math-dark-color);
+  color: var(--math-light-color);
+  border-color: var(--math-dark-color);
+}
+
+.user-menu .dropdown-item {
+  background-color: var(--math-dark-color);
+  color: var(--math-light-color);
+}
+.user-menu .dropdown-item:hover {
+  color: var(--math-highlight-color);
+  font-weight:bold;
+}
+
+.user-menu .dropdown-menu.show {
+  background-color: var(--math-dark-color);
+  width: 200px; // prevents size changing when bolding a menu-item on hover
+}
+
+/* --------------- Mobile ------------------------ */
+
+@media screen and (max-width: $math-mobile) {
+  .header-logo {
+    height:100px;
+    background-size: 100% 100%;
+    padding-top:20px;
+  }
+
+  .header-logo h2 {
+    margin-left:20px;
+  }
+
+  .user-menu {
+    display:none;
+  }
+}

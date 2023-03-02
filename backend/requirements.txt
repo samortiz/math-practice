@@ -1,0 +1,12 @@
+# Only include manually added here
+Django==4.1.3
+django-cors-headers==3.13.0
+django-filter==22.1
+djangorestframework==3.14.0
+djangorestframework-simplejwt==4.8.0
+django-ipware==4.0.2
+Markdown==3.4.1
+psycopg2-binary==2.9.5
+python-dateutil==2.8.2
+python-decouple==3.6
+

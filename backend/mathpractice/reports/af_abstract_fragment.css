@@ -1,0 +1,53 @@
+.af-container {
+  padding: 20px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+}
+
+.af-symposium {
+  width: 100%;
+  text-align: right;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.af-location {
+  width: 100%;
+  text-align: right;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.af-abstract-title {
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.af-authors {
+  width: 100%;
+  text-align: center;
+  font-style: italic;
+}
+
+.af-affiliations {
+  width: 100%;
+  text-align: center;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.af-abstract-header {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.af-abstract-text {
+  white-space: pre-wrap;
+}

@@ -1,0 +1,3 @@
+@import "global_variables";
+// If we want to override the default bootstrap theme we can do so in global_variables before loading the bootstrap css
+@import '~bootstrap/scss/bootstrap';

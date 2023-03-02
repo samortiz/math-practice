@@ -1,0 +1,5 @@
+# Scheduled jobs
+
+# At 3 AM every day run the daily job
+0 3 * * * /usr/local/bin/python /app/backend/usacm/manage.py run_daily > /proc/1/fd/1 2>/proc/1/fd/2
+
