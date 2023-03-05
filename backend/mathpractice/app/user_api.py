@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 
 from app.misc_utils import get_key, response_with_data_and_errors, response_with_errors
 from app.user_utils import generate_user_token, validate_username, validate_email, validate_password, validate_first_name, \
-    validate_last_name
+    validate_last_name, get_mastery
 from app.decorators import allow_everyone
 
 
@@ -94,6 +94,7 @@ def me(request):
         'email': user.email,
         'first_name': user.first_name,
         'last_name': user.last_name,
+        'mastery': get_mastery(user)
     }
     return response_with_data_and_errors(data, [])
 

@@ -1,18 +1,20 @@
 import {PageHeader} from "../menu/PageHeader";
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 import React from "react";
+import {useHistory} from "react-router-dom";
 
 export function Dashboard() {
+  const history = useHistory();
+
+  function startSession() {
+    history.push('/session');
+  }
+
   return (
       <div>
         <PageHeader pageTitle= "Dashboard" />
         <Container fluid className="math-container-wide">
-          <Row className="u-card-top u-card-title">
-            <Col className="col-12">
-               TODO Some content would go here
-            </Col>
-          </Row>
-
+          <Button onClick={() => startSession()}> Start Session</Button>
         </Container>
       </div>
   );

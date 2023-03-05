@@ -53,3 +53,14 @@ export function intersect(a, b) {
   return a.filter(aVal => b.indexOf(aVal) > -1)
       .filter((e, i, c) => c.indexOf(e) === i); // remove duplicates
 }
+
+/***
+ * Gets a random element from the array.
+ */
+export function getRandom(arr) {
+  if (!arr || !arr.length) {
+    return null;
+  }
+  const index = Math.floor(Math.random() * arr.length);
+  return arr[index];
+}

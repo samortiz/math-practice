@@ -1,1 +1,22 @@
 # Constants for MathPractice
+
+INPUT_TYPE_POSITIVE_INTEGER = "positive integer"
+INPUT_TYPE_INTEGER = "integer"
+INPUT_TYPE_POSITIVE_REAL = "positive real"
+INPUT_TYPE_REAL = "real"
+INPUT_TYPE_FRACTION = "fraction"
+INPUT_TYPE_TEXT = "text"
+
+SESSION_STATUS_ACTIVE = 'active'
+SESSION_STATUS_PASS = 'pass'
+SESSION_STATUS_FAIL = 'fail'
+SESSION_STATUS_ABORT = 'aborted'
+
+ANSWER_STATUS_CORRECT = 'correct'
+ANSWER_STATUS_WRONG = 'wrong'
+ANSWER_STATUS_TIMEOUT = 'timeout'
+
+MASTERY_STATUS_INCOMPLETE = "incomplete"
+MASTERY_STATUS_NOT_ACCURATE = "not accurate"
+MASTERY_STATUS_ACCURATE_SLOW = "accurate slow"
+MASTERY_STATUS_MASTERED = "mastered"

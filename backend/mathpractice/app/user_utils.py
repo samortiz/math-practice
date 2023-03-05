@@ -7,6 +7,9 @@ from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from rest_framework.authtoken.models import Token
 
+from app.constants import MASTERY_STATUS_INCOMPLETE
+from app.models import Category, CategoryMastery
+
 
 def generate_user_token(user, errors, request):
     """
@@ -113,3 +116,23 @@ def validate_last_name(last_name, errors, field_name):
     if not last_name:
         errors.append({'message': 'You must enter a last name.',
                        'fields': [field_name]})
+
+
+def get_mastery(user):
+    """
+    Gets the user's category mastery data
+    """
+    mastery = []
+    for category in Category.objects.all():
+        deps = []
+        for depCat in category.deps.all():
+            deps.append(depCat.id)
+        categoryMastery = CategoryMastery.objects.filter(category=category, user=user).first()
+        mastery.append({
+            'category_id': category.id,
+            'category_name': category.name,
+            'category_description': category.description,
+            'category_deps': deps,
+            'mastery_status': categoryMastery.mastery_status if categoryMastery else MASTERY_STATUS_INCOMPLETE,
+        })
+    return mastery

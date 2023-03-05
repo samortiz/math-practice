@@ -108,3 +108,8 @@ def clean_code(code):
     return code.replace('-', '').replace(' ', '').upper().strip()
 
 
+def is_number(val):
+    """
+    :return: true if val is a number or numeric false otherwise
+    """
+    return isinstance(val, (int, float, complex)) and not isinstance(val, bool)
