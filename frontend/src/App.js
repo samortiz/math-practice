@@ -51,6 +51,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import {Register} from "./user/Register";
 import {Session} from "./session/Session";
+import {SessionView} from "./session/SessionView";
 // Import all the font-awesome fonts we are going to use in the site (Could do a mass import fas but that's around 1MB!)
 library.add(
     faAngleUp, faAngleDown, faBars, faCalendar, faCheckDouble, faClipboardQuestion,
@@ -100,6 +101,7 @@ export default function App() {
                 <Route path="/register"><Register/></Route>
                 {userLoggedIn && <Route path="/dashboard"><Dashboard/></Route>}
                 {userLoggedIn && <Route path="/session"><Session/></Route>}
+                {userLoggedIn && <Route path="/session-view"><SessionView/></Route>}
               </Switch>
             </div>
           </div>

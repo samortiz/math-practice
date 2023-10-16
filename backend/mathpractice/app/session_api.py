@@ -1,8 +1,8 @@
 from django.utils import timezone
 from rest_framework.decorators import api_view
 
-from app.constants import ANSWER_STATUS_TIMEOUT, ANSWER_STATUS_CORRECT, ANSWER_STATUS_WRONG, SESSION_STATUS_ACTIVE
-from app.misc_utils import response_with_data_and_errors, get_key, is_number
+from app.constants import ANSWER_STATUS_TIMEOUT, ANSWER_STATUS_CORRECT, ANSWER_STATUS_WRONG, SESSION_STATUS_ACTIVE, SESSION_STATUS_PASS
+from app.misc_utils import response_with_data_and_errors, get_key, is_number, response_with_errors
 from app.models import Category, Session, Question, Answer
 from app.session_utils import get_session_display, get_answer_display
 
@@ -43,6 +43,35 @@ def get_or_create_session(request):
                 session.categories.add(category)
         session_display = get_session_display(session, user)
     return response_with_data_and_errors(session_display, errors)
+
+
+@api_view(('POST',))
+def end_session(request):
+    """
+    Ends a session. Closing it and setting the status
+    """
+    errors = []
+    user = request.user
+    session_id = get_key(request.data, 'session_id', '')
+    if not session_id:
+        errors.append({'message': 'No session_id specified.', 'fields': ['']})
+    session = None
+    if not errors:
+        session = Session.objects.filter(id=session_id, user=user, active=True).first()
+        if not session:
+            errors.append({'message': 'No session found.', 'fields': ['']})
+    if not errors and session:
+        end_time = timezone.now()
+        duration_ms = round((end_time - session.start_time).total_seconds() * 1000)
+        status = SESSION_STATUS_PASS  # TODO calculate pass/fail
+        session.end_time = timezone.now()
+        session.duration_ms = duration_ms
+        session.session_status = status
+        session.active = False
+        session.save()
+        print('saving session')
+
+    return response_with_errors(errors)
 
 
 @api_view(('POST',))

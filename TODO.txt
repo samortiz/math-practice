@@ -1,0 +1,11 @@
+Math-Practice TODO
+
+- Display of categories with deps
+- Choose categories for session
+- Display Sessions
+
+- Setup container to run scheduled Jobs
+- Scheduled job to end any non-complete session
+- Scheduled job to delete sessions with no answers
+- Allow manual delete of session
+ 

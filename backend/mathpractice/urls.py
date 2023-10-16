@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/v1/login/', user_api.login, name='login'),
     path('api/v1/logout/', user_api.logout, name='logout'),
     path('api/v1/me/', user_api.me, name='me'),
-    path('api/v1/session/getorcreate/', session_api.get_or_create_session, name='getorcreate-session'),
-    path('api/v1/session/answer/create/', session_api.create_answer, name='create-answer'),
+    path('api/v1/session-get-or-create/', session_api.get_or_create_session, name='getorcreate-session'),
+    path('api/v1/session-end/', session_api.end_session, name='end-session'),
+    path('api/v1/session-answer-create/', session_api.create_answer, name='create-answer'),
 ]

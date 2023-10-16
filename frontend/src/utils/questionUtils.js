@@ -1,6 +1,9 @@
 import {ANSWER_STATUS_CORRECT, ANSWER_STATUS_WRONG, DEFAULT_QUESTION_MASTERY_COUNT} from "../constants";
 import {getRandom} from "./miscUtils";
 
+/**
+ * Gets the mastery count - how many times you need to get it correct in a row to have mastered this question
+ */
 export function getMasteryCount(question, categories) {
   for (const category of categories) {
     if (category.category_id === question.category_id) {
@@ -86,10 +89,11 @@ export function getNextQuestion(session) {
     console.warn('No state set!  cannot calculate nextQuestionIndex');
     return null;
   }
+  // Use a weighting system to ask questions you got wrong more often
   const questions = session.questions || [];
   const sumOfScores = questions.map(q => q.score).reduce((prev, next) => prev + next);
   const scoreIndex = Math.floor(Math.random() * sumOfScores);
-  console.log(`nextQuestion sumOfScores=${sumOfScores} scoreIndex=${scoreIndex} `, questions.filter(q=> q.score > 0).map(q => q.text + 's='+q.score));
+  console.log(`nextQuestion sumOfScores=${sumOfScores} scoreIndex=${scoreIndex} `, questions.filter(q=> q.score > 0).map(q => q.text + ' score='+q.score));
   let currSum = 0;
   for (const question of questions) {
     currSum = currSum + question.score;
@@ -100,4 +104,17 @@ export function getNextQuestion(session) {
   // shouldn't happen
   console.warn(`Could not get next question ${sumOfScores} scoreIndex=${scoreIndex} currSum=${currSum}`);
   return getRandom(questions);
+}
+
+/**
+ * Check if the session has been completed successfully
+ * @param session backend session object
+ * @returns {boolean} true if the session has been finished, or false if session can't be found or is not complete
+ */
+export function isSessionComplete(session) {
+  if (!session || !session.answers) {
+    return false;
+  }
+  // If you get X questions correct, we'll call it a day
+  return session.answers.filter(a => a.answer_status === ANSWER_STATUS_CORRECT).length > 10;
 }

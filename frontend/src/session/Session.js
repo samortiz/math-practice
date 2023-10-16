@@ -1,12 +1,13 @@
 import {PageHeader} from "../menu/PageHeader";
 import {Container} from "react-bootstrap";
 import React, {Fragment, useEffect, useState} from "react";
-import {createAnswer, getOrCreateNewSession} from "../api/SessionApi";
+import {createAnswer, endSession, getOrCreateNewSession} from "../api/SessionApi";
 import {Keypad} from "./Keypad";
 import './Session.scss';
-import {getNextQuestion, questionAnswered, setupSession} from "../utils/questionUtils";
-import {INPUT_TYPE_ALL} from "../constants";
+import {getNextQuestion, isSessionComplete, questionAnswered, setupSession} from "../utils/questionUtils";
+import {ANSWER_STATUS_CORRECT, INPUT_TYPE_ALL} from "../constants";
 import {handleError} from "../utils/networkUtils";
+import {useHistory} from "react-router-dom";
 
 const STATUS_ANSWERING = 'answering';
 const STATUS_WRONG = 'wrong';
@@ -19,6 +20,7 @@ export function Session() {
   const [status, setStatus] = useState(STATUS_ANSWERING);
   const [autoNextTimer, setAutoNextTimer] = useState(0);
   const [startQuestionTime, setStartQuestionTime] = useState(0);
+  const history = useHistory();
 
   useEffect(() => {
     getOrCreateNewSession([7], (code, data, errors) => {
@@ -40,6 +42,17 @@ export function Session() {
   }
 
   function showNextQuestion(aSession) {
+    if (isSessionComplete(aSession)) {
+      endSession(aSession.session_id, (code, data, errors) => {
+        if (code === 200) {
+          history.push("/session-view");
+        } else {
+          handleError(errors);
+        }
+      });
+      // We won't show the next question, we will attempt to end the session
+      return;
+    }
     const nextQuestion = getNextQuestion(aSession);
     setQuestion(nextQuestion);
     setAnswer('');
